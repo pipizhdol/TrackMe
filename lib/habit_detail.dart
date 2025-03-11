@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // Импорт пакета intl
 import 'habit.dart';
 
 class HabitDetailScreen extends StatelessWidget {
@@ -24,9 +25,13 @@ class HabitDetailScreen extends StatelessWidget {
           children: <Widget>[
             Text('Описание: ${habit.description}'),
             Text('Прогресс: ${habit.currentCount}/${habit.targetCount}'),
-            Text('Напоминание: ${habit.reminderTime.toLocal()}'),
+            Text('Напоминание: ${DateFormat('HH:mm').format(habit.reminderTime)}'),
+            Text('Повтор: ${habit.repeatMode}'),
             ElevatedButton(
-              onPressed: () => onIncrement(habit.id),
+              onPressed: () {
+                onIncrement(habit.id); // Увеличиваем счётчик
+                Navigator.pop(context, true); // Возвращаемся на предыдущий экран с результатом
+              },
               child: Text('Отметить выполнение'),
             ),
             ElevatedButton(

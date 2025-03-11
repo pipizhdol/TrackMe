@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // Для форматирования времени
 import 'notification_service.dart';
 
 class AddHabitScreen extends StatefulWidget {
@@ -11,6 +12,15 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
   final _descriptionController = TextEditingController();
   final _targetCountController = TextEditingController();
   DateTime _reminderTime = DateTime.now();
+  String _repeatMode = 'Никогда'; // По умолчанию
+
+  // Варианты повторов
+  final List<String> _repeatOptions = [
+    'Никогда',
+    'Каждый день',
+    'По будням',
+    'По выходным',
+  ];
 
   void _submitData() {
     final enteredTitle = _titleController.text;
@@ -27,6 +37,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
       enteredTitle,
       'Не забудьте выполнить: $enteredDescription',
       _reminderTime,
+      _repeatMode, // Передаём режим повтора
     );
 
     Navigator.pop(context, {
@@ -34,23 +45,28 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
       'description': enteredDescription,
       'targetCount': enteredTargetCount,
       'reminderTime': _reminderTime,
+      'repeatMode': _repeatMode,
     });
   }
 
-  void _presentDatePicker() {
-    showDatePicker(
+  // Выбор времени
+  Future<void> _selectTime() async {
+    final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(DateTime.now().year + 1),
-    ).then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
+      initialTime: TimeOfDay.fromDateTime(_reminderTime),
+    );
+
+    if (pickedTime != null) {
       setState(() {
-        _reminderTime = pickedDate;
+        _reminderTime = DateTime(
+          _reminderTime.year,
+          _reminderTime.month,
+          _reminderTime.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
       });
-    });
+    }
   }
 
   @override
@@ -84,18 +100,32 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
               ),
               Row(
                 children: <Widget>[
-                  Text('Напоминание: ${_reminderTime.toLocal()}'),
+                  Text('Напоминание: ${DateFormat('HH:mm').format(_reminderTime)}'),
                   TextButton(
-                    onPressed: _presentDatePicker,
+                    onPressed: _selectTime,
                     style: TextButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor,
                     ),
                     child: Text(
-                      'Выбрать дату',
+                      'Выбрать время',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
+              ),
+              DropdownButton<String>(
+                value: _repeatMode,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _repeatMode = newValue!;
+                  });
+                },
+                items: _repeatOptions.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
               ElevatedButton(
                 onPressed: _submitData,

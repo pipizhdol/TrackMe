@@ -21,25 +21,42 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<void> scheduleNotification(int id, String title, String body, DateTime scheduledDate) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  Future<void> scheduleNotification(int id, String title, String body, DateTime scheduledDate, String repeatMode) async {
+    final AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your_channel_id',
       'your_channel_name',
       importance: Importance.max,
       priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+      largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
+      styleInformation: BigTextStyleInformation(body),
     );
 
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+    final NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
     );
 
-    await flutterLocalNotificationsPlugin.schedule(
-      id,
-      title,
-      body,
-      scheduledDate,
-      platformChannelSpecifics,
-    );
+    if (repeatMode == 'Каждый день') {
+      await flutterLocalNotificationsPlugin.periodicallyShow(
+        id,
+        title,
+        body,
+        RepeatInterval.daily,
+        platformChannelSpecifics,
+      );
+    } else if (repeatMode == 'По будням') {
+      // Реализуйте логику для будних дней
+    } else if (repeatMode == 'По выходным') {
+      // Реализуйте логику для выходных дней
+    } else {
+      await flutterLocalNotificationsPlugin.schedule(
+        id,
+        title,
+        body,
+        scheduledDate,
+        platformChannelSpecifics,
+      );
+    }
   }
 
   Future<void> cancelNotification(int id) async {

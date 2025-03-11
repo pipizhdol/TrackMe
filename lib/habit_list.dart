@@ -12,13 +12,14 @@ class HabitListScreen extends StatefulWidget {
 class _HabitListScreenState extends State<HabitListScreen> {
   List<Habit> _habits = [];
 
-  void _addHabit(String title, String description, int targetCount, DateTime reminderTime) {
+  void _addHabit(String title, String description, int targetCount, DateTime reminderTime, String repeatMode) {
     final newHabit = Habit(
       id: DateTime.now().toString(),
       title: title,
       description: description,
       targetCount: targetCount,
       reminderTime: reminderTime,
+      repeatMode: repeatMode,
     );
 
     setState(() {
@@ -48,7 +49,31 @@ class _HabitListScreenState extends State<HabitListScreen> {
     );
 
     if (result != null) {
-      _addHabit(result['title'], result['description'], result['targetCount'], result['reminderTime']);
+      _addHabit(
+        result['title'],
+        result['description'],
+        result['targetCount'],
+        result['reminderTime'],
+        result['repeatMode'],
+      );
+    }
+  }
+
+  void _navigateToHabitDetail(BuildContext context, Habit habit) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HabitDetailScreen(
+          habit: habit,
+          onIncrement: _incrementHabit,
+          onDelete: _deleteHabit,
+        ),
+      ),
+    );
+
+    // Если результат true, обновляем состояние
+    if (result == true) {
+      setState(() {});
     }
   }
 
@@ -69,16 +94,7 @@ class _HabitListScreenState extends State<HabitListScreen> {
                   title: Text(_habits[index].title),
                   subtitle: Text('Прогресс: ${_habits[index].currentCount}/${_habits[index].targetCount}'),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HabitDetailScreen(
-                          habit: _habits[index],
-                          onIncrement: _incrementHabit,
-                          onDelete: _deleteHabit,
-                        ),
-                      ),
-                    );
+                    _navigateToHabitDetail(context, _habits[index]); // Используем новый метод
                   },
                 );
               },
