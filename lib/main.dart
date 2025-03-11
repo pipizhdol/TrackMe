@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'notification_service.dart';
 import 'habit_list.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService().init();
+void main() {
   runApp(MyApp());
 }
 

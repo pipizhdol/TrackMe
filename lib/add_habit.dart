@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'notification_service.dart';
 
 class AddHabitScreen extends StatefulWidget {
@@ -102,7 +101,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                 onPressed: _submitData,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
-                  foregroundColor: Theme.of(context).textTheme.labelLarge?.color, // Исправлено на labelLarge
+                  foregroundColor: Theme.of(context).textTheme.labelLarge?.color,
                 ),
                 child: Text('Добавить привычку'),
               ),
