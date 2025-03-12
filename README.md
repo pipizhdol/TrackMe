@@ -1,16 +1,38 @@
-# flutter_application_1
+# TrackMe - приложение для Аврора ОС
 
-A new Flutter project.
+## Описание
 
-## Getting Started
+  TrackMe - это удобное и простое в использовании приложение, которое поможет вам формировать полезные привычки и отслеживать свой прогресс. Также приложение позволяет устанавливать индивидуальные цели и частоту выполнения. Вы можете добавлять напоминания, чтобы не пропускать важные задачи.
 
-This project is a starting point for a Flutter application.
+## Функциональность
 
-A few resources to get you started if this is your first Flutter project:
+- **Создание и управление привычками**  
+  Добавляйте новые привычки и настраивайте детали.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Установка индивидуальных целей**  
+  Задавайте цели для каждой привычки, например, количество выполнений в день/неделю/месяц.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Добавление напоминаний**  
+  Устанавливайте уведомления, чтобы не пропускать выполнение привычек.
+
+- **Мотивационные уведомления**  
+  Получайте вдохновляющие сообщения и советы для поддержания мотивации.
+
+- **Экспорт данных**  
+  Сохраняйте свои результаты в виде файлов для дальнейшего анализа или печати.
+
+## Команда разработчиков
+
+-  pipizhdol
+-  NightRider
+
+## Технологии
+-   **AvroraSDK** Плагин для разработки приложения для ОС Аврора.
+-   **Flutter:** Кросс-платформенный фреймворк для разработки пользовательского интерфейса.
+-   **Dart:** Язык программирования, используемый во Flutter.
+
+### Используемые библиотеки и пакеты Flutter:
+
+-  flutter_local_notifications
+-  google_fonts
+-  intl
