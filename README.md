@@ -38,6 +38,6 @@
 -  intl
 
 ## Галерея
-| ![1](images/menu_with_habbit.png) 
-| ![2](images/add_habbit.png)
-| ![3](images/menu_of_habbit.png) 
+![1](images/menu_with_habbit.png) 
+![2](images/add_habbit.png)
+![3](images/menu_of_habbit.png) 
