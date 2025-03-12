@@ -39,6 +39,5 @@
 
 ## Галерея
 ![1](images/menu_with_habbit.png) 
-![2](images/add_habbit.png)
-![3](images/1habbit.png)
-![4](images/menu_of_habbit.png) 
+![2](images/1habbit.png)
+![3](images/menu_of_habbit.png) 
